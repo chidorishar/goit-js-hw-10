@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { toggleButtonEnabledState, setButtonEnabledState } from './common';
 
 const elStartButton = document.querySelector('[data-start]');
@@ -134,7 +135,7 @@ function onDataSelected(selectedDates) {
     setButtonEnabledState(elStartButton, true);
   } else {
     setButtonEnabledState(elStartButton, false);
-    alert('Please choose a date in the future');
+    alertOnWrongDate();
   }
 
   if (timer.isStarted()) {
@@ -146,7 +147,7 @@ function onDataSelected(selectedDates) {
 function onStartClick() {
   if (!isTimeInFuture(selectedTime.getTime())) {
     toggleButtonEnabledState(elStartButton);
-    alert('Please choose a date in the future');
+    alertOnWrongDate();
     return;
   }
   timer.setTime(selectedTime);
@@ -172,4 +173,8 @@ function toggleTimerActiveState() {
 
 function updateStartButtonText() {
   elStartButton.textContent = timer.isStarted() ? 'Stop' : 'Start';
+}
+
+function alertOnWrongDate() {
+  Notify.failure('Please choose a date in the future');
 }
