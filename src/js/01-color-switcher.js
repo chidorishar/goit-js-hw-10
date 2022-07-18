@@ -1,3 +1,5 @@
+import toggleButtonEnabledState from './common';
+
 const TIMER_INTERVAL = 1000;
 const cntrlBttns = {
   start: document.querySelector('[data-start]'),
@@ -31,10 +33,4 @@ function setRndBackgroundColor() {
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-}
-
-function toggleButtonEnabledState(bttn) {
-  bttn.hasAttribute('disabled')
-    ? bttn.removeAttribute('disabled')
-    : bttn.setAttribute('disabled', '');
 }
