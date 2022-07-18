@@ -130,8 +130,6 @@ class TimerHTMLInterface {
 function onDataSelected(selectedDates) {
   selectedTime = selectedDates[0];
 
-  console.log(selectedTime);
-
   if (isTimeInFuture(selectedTime.getTime())) {
     setButtonEnabledState(elStartButton, true);
   } else {
@@ -141,7 +139,7 @@ function onDataSelected(selectedDates) {
 
   if (timer.isStarted()) {
     timer.stop();
-    elStartButton.textContent = 'Start';
+    updateStartButtonText();
   }
 }
 
@@ -153,7 +151,7 @@ function onStartClick() {
   }
   timer.setTime(selectedTime);
   toggleTimerActiveState();
-  toggleStartButtonText();
+  updateStartButtonText();
 }
 
 function onTimerTick({ days, hours, minutes, seconds }) {
@@ -161,7 +159,7 @@ function onTimerTick({ days, hours, minutes, seconds }) {
 }
 
 function onTimerStop() {
-  toggleStartButtonText();
+  updateStartButtonText();
 }
 
 function isTimeInFuture(time) {
@@ -172,6 +170,6 @@ function toggleTimerActiveState() {
   timer.isStarted() ? timer.stop() : timer.start();
 }
 
-function toggleStartButtonText() {
+function updateStartButtonText() {
   elStartButton.textContent = timer.isStarted() ? 'Stop' : 'Start';
 }
