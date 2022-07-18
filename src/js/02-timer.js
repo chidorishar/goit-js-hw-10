@@ -59,9 +59,12 @@ function onDataSelected(selectedDates) {
 
   console.log(selectedTime);
 
-  isTimeInFuture(selectedTime.getTime())
-    ? toggleButtonEnabledState(elStartButton)
-    : alert('Please choose a date in the future');
+  if (isTimeInFuture(selectedTime.getTime())) {
+    setButtonEnabledState(elStartButton, true);
+  } else {
+    setButtonEnabledState(elStartButton, false);
+    alert('Please choose a date in the future');
+  }
 }
 
 function onStartClick() {
@@ -75,6 +78,7 @@ function onStartClick() {
 }
 
 function onTimerTick({ days, hours, minutes, seconds }) {}
+
 function isTimeInFuture(time) {
   return time > Date.now();
 }
