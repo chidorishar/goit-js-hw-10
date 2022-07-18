@@ -4,6 +4,7 @@ import { toggleButtonEnabledState, setButtonEnabledState } from './common';
 
 const elStartButton = document.querySelector('[data-start]');
 let timer = null;
+let timerHTML = null;
 let selectedTime = 0;
 
 class Timer {
@@ -38,6 +39,26 @@ class Timer {
     setInterval(this.#tick.bind(this), 1000);
     this.#isActive = true;
   }
+class TimerHTMLInterface {
+  #elements = {};
+
+  constructor({ daysEl, hoursEl, minutesEl, secondsEl }) {
+    this.#elements.days = daysEl;
+    this.#elements.hours = hoursEl;
+    this.#elements.minutes = minutesEl;
+    this.#elements.seconds = secondsEl;
+  }
+
+  #addLeadingZero(value) {
+    return value.toString().padStart(2, '0');
+  }
+
+  update({ days, hours, minutes, seconds }) {
+    this.#elements.days.textContent = days;
+    this.#elements.hours.textContent = this.#addLeadingZero(hours);
+    this.#elements.minutes.textContent = this.#addLeadingZero(minutes);
+    this.#elements.seconds.textContent = this.#addLeadingZero(seconds);
+  }
 }
 
 (() => {
@@ -50,6 +71,12 @@ class Timer {
     minDate: Date.now(),
   });
   timer = new Timer(onTimerTick);
+  timerHTML = new TimerHTMLInterface({
+    daysEl: document.querySelector('[data-days]'),
+    hoursEl: document.querySelector('[data-hours]'),
+    minutesEl: document.querySelector('[data-minutes]'),
+    secondsEl: document.querySelector('[data-seconds]'),
+  });
   elStartButton.addEventListener('click', onStartClick);
   toggleButtonEnabledState(elStartButton);
 })();
@@ -78,6 +105,9 @@ function onStartClick() {
 }
 
 function onTimerTick({ days, hours, minutes, seconds }) {}
+function onTimerTick({ days, hours, minutes, seconds }) {
+  timerHTML.update({ days, hours, minutes, seconds });
+}
 
 function isTimeInFuture(time) {
   return time > Date.now();
