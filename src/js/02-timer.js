@@ -1,6 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-import toggleButtonEnabledState from './common';
+import { toggleButtonEnabledState, setButtonEnabledState } from './common';
 
 const elStartButton = document.querySelector('[data-start]');
 let selectedTime = 0;

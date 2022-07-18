@@ -1,4 +1,4 @@
-import toggleButtonEnabledState from './common';
+import { toggleButtonEnabledState } from './common';
 
 const TIMER_INTERVAL = 1000;
 const cntrlBttns = {

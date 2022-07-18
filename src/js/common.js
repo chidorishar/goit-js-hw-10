@@ -1,7 +1,11 @@
-export default function toggleButtonEnabledState(bttn) {
+export function toggleButtonEnabledState(bttn) {
   bttn.hasAttribute('disabled')
     ? bttn.removeAttribute('disabled')
     : bttn.setAttribute('disabled', '');
 }
 
-// export { toggleButtonEnabledState };
+export function setButtonEnabledState(bttn, enabled = false) {
+  enabled
+    ? bttn.removeAttribute('disabled')
+    : bttn.setAttribute('disabled', '');
+}
