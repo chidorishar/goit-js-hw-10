@@ -11,19 +11,48 @@ class Timer {
   #deltaTime;
   #endTime;
   #isActive;
+  #deltaTimeInDDHHMMSS;
+  #timerID;
 
   constructor(onTick = () => {}) {
     this.onTick = onTick;
     this.#deltaTime = 0;
     this.#endTime = -1;
     this.#isActive = false;
+    this.#deltaTimeInDDHHMMSS = {};
+  }
+
+  #parseDeltaTime() {
+    const ms = this.#deltaTime;
+    // Number of milliseconds per unit of time
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+
+    // Remaining days
+    this.#deltaTimeInDDHHMMSS.days = Math.floor(ms / day);
+    // Remaining hours
+    this.#deltaTimeInDDHHMMSS.hours = Math.floor((ms % day) / hour);
+    // Remaining minutes
+    this.#deltaTimeInDDHHMMSS.minutes = Math.floor(
+      ((ms % day) % hour) / minute
+    );
+    // Remaining seconds
+    this.#deltaTimeInDDHHMMSS.seconds = Math.floor(
+      (((ms % day) % hour) % minute) / second
+    );
   }
 
   #tick() {
     let { deltaTime, endTime } = this;
     this.#deltaTime = this.#endTime - Date.now();
-    this.onTick(this.#deltaTime);
-    console.log(this.#deltaTime);
+    if (!(this.#deltaTime > 0)) {
+      this.#deltaTime = 0;
+      this.stop();
+    }
+    this.#parseDeltaTime();
+    this.onTick(this.#deltaTimeInDDHHMMSS);
   }
 
   setTime(time) {
@@ -36,9 +65,18 @@ class Timer {
       return;
     }
 
-    setInterval(this.#tick.bind(this), 1000);
+    this.timerID = setInterval(this.#tick.bind(this), 1000);
     this.#isActive = true;
   }
+
+  stop() {
+    this.#deltaTime = 0;
+    this.#endTime = -1;
+    this.#isActive = false;
+    clearInterval(this.timerID);
+  }
+}
+
 class TimerHTMLInterface {
   #elements = {};
 
@@ -104,7 +142,6 @@ function onStartClick() {
   timer.start();
 }
 
-function onTimerTick({ days, hours, minutes, seconds }) {}
 function onTimerTick({ days, hours, minutes, seconds }) {
   timerHTML.update({ days, hours, minutes, seconds });
 }
