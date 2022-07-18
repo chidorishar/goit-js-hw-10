@@ -13,9 +13,12 @@ class Timer {
   #isActive;
   #deltaTimeInDDHHMMSS;
   #timerID;
+  #onTick;
+  #onStop;
 
-  constructor(onTick = () => {}) {
-    this.onTick = onTick;
+  constructor(onTick = () => {}, onStop = () => {}) {
+    this.#onTick = onTick;
+    this.#onStop = onStop;
     this.#deltaTime = 0;
     this.#endTime = -1;
     this.#isActive = false;
@@ -52,7 +55,11 @@ class Timer {
       this.stop();
     }
     this.#parseDeltaTime();
-    this.onTick(this.#deltaTimeInDDHHMMSS);
+    this.#onTick(this.#deltaTimeInDDHHMMSS);
+  }
+
+  isStarted() {
+    return this.#isActive;
   }
 
   setTime(time) {
@@ -65,7 +72,7 @@ class Timer {
       return;
     }
 
-    this.timerID = setInterval(this.#tick.bind(this), 1000);
+    this.#timerID = setInterval(this.#tick.bind(this), 1000);
     this.#isActive = true;
   }
 
@@ -73,7 +80,8 @@ class Timer {
     this.#deltaTime = 0;
     this.#endTime = -1;
     this.#isActive = false;
-    clearInterval(this.timerID);
+    clearInterval(this.#timerID);
+    this.#onStop();
   }
 }
 
@@ -108,7 +116,7 @@ class TimerHTMLInterface {
     onClose: onDataSelected,
     minDate: Date.now(),
   });
-  timer = new Timer(onTimerTick);
+  timer = new Timer(onTimerTick, onTimerStop);
   timerHTML = new TimerHTMLInterface({
     daysEl: document.querySelector('[data-days]'),
     hoursEl: document.querySelector('[data-hours]'),
@@ -130,6 +138,11 @@ function onDataSelected(selectedDates) {
     setButtonEnabledState(elStartButton, false);
     alert('Please choose a date in the future');
   }
+
+  if (timer.isStarted()) {
+    timer.stop();
+    elStartButton.textContent = 'Start';
+  }
 }
 
 function onStartClick() {
@@ -139,13 +152,26 @@ function onStartClick() {
     return;
   }
   timer.setTime(selectedTime);
-  timer.start();
+  toggleTimerActiveState();
+  toggleStartButtonText();
 }
 
 function onTimerTick({ days, hours, minutes, seconds }) {
   timerHTML.update({ days, hours, minutes, seconds });
 }
 
+function onTimerStop() {
+  toggleStartButtonText();
+}
+
 function isTimeInFuture(time) {
   return time > Date.now();
+}
+
+function toggleTimerActiveState() {
+  timer.isStarted() ? timer.stop() : timer.start();
+}
+
+function toggleStartButtonText() {
+  elStartButton.textContent = timer.isStarted() ? 'Stop' : 'Start';
 }
