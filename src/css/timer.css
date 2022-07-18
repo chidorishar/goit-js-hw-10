@@ -1,8 +1,15 @@
+#datetime-picker {
+  color: #000;
+}
+
 #datetime-picker,
 [data-start] {
-  color: #000;
   font-size: 18px;
   font-weight: 400;
+}
+
+[data-start]:enabled {
+  color: #000;
 }
 
 .timer {
