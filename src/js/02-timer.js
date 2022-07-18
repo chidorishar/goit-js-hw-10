@@ -73,6 +73,7 @@ class Timer {
       return;
     }
 
+    this.#tick();
     this.#timerID = setInterval(this.#tick.bind(this), 1000);
     this.#isActive = true;
   }
