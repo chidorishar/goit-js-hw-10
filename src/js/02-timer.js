@@ -39,6 +39,7 @@ class Timer {
     this.#isActive = true;
   }
 }
+
 (() => {
   flatpickr('#datetime-picker', {
     enableTime: true,
@@ -46,6 +47,7 @@ class Timer {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose: onDataSelected,
+    minDate: Date.now(),
   });
   timer = new Timer(onTimerTick);
   elStartButton.addEventListener('click', onStartClick);
