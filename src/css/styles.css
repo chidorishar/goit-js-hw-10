@@ -18,3 +18,82 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+/* RESSETERS */
+
+ul,
+li,
+span,
+h2,
+img {
+  margin: 0;
+  padding: 0;
+}
+
+/* GLOBALS */
+
+body {
+  font-size: 16px;
+  font-weight: 400;
+
+  color: #000;
+}
+
+input {
+  color: inherit;
+}
+
+li {
+  display: flex;
+  list-style: none;
+}
+
+ul,
+h2 {
+  display: inline;
+}
+
+img {
+  display: block;
+  width: 25px;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* STYLES */
+
+.country-list__item,
+.country-info__item,
+.detailed-info__name-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.country-list__item,
+.detailed-info__item {
+  margin-bottom: 5px;
+}
+
+.languages-list__item {
+  display: inline;
+}
+
+.country-info__country-image {
+  display: inline;
+}
+
+.detailed-info__name-wrapper {
+  margin-bottom: 20px;
+}
+
+.detailed-info__title {
+  font-weight: bold;
+}
+
+.detailed-info__languages-list {
+  display: flex;
+}
+
+.detailed-info__title {
+  margin-right: 5px;
+}
