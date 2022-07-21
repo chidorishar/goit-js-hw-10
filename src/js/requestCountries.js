@@ -35,15 +35,22 @@ function onInput(event) {
 }
 
 function renderCountries(countries) {
-  if (countries.length > 1 && countries.length <= 10) {
-    clearRenderedElements(false, true);
-    renderCountriesShortInfo(countries);
-  } else if (countries.length > 10) {
-    clearRenderedElements();
-    Notify.info('Too many matches found. Please enter a more specific name.');
-  } else {
-    clearRenderedElements(true, false);
-    renderCountriesExtendInfo(countries);
+  try {
+    if (countries.length > 1 && countries.length <= 10) {
+      clearRenderedElements(false, true);
+      renderCountriesShortInfo(countries);
+    } else if (countries.length > 10) {
+      clearRenderedElements();
+      Notify.info('Too many matches found. Please enter a more specific name.');
+    } else {
+      clearRenderedElements(true, false);
+      renderCountriesExtendInfo(countries);
+    }
+  } catch (error) {
+    Notify.failure(
+      'There is a failure while rendering an element! Check the console log for additional info.'
+    );
+    console.log(error.message);
   }
 }
 
