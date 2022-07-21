@@ -18,13 +18,9 @@
     "url": "https://github.com/chidorishar/goit-js-hw-10/issues"
   },
   "dependencies": {
-    "@vimeo/player": "^2.17.1",
-    "flatpickr": "^4.6.13",
     "lodash.debounce": "^4.0.8",
-    "lodash.throttle": "^4.1.1",
     "modern-normalize": "^1.1.0",
-    "notiflix": "^3.2.5",
-    "simplelightbox": "^2.10.3"
+    "notiflix": "^3.2.5"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
