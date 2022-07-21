@@ -1,0 +1,37 @@
+{{#each countries}}
+  <div class='detailed-info__name-wrapper'>
+    <img
+      class='country-info__country-image'
+      src={{flags.svg}}
+      alt='flag of {{name.official}}'
+    />
+    <h2 class='country-info__country-name--bold'>
+      {{name.official}}
+    </h2>
+  </div>
+  <ul class='country-info__detailed-info'>
+    <li class='detailed-info__item detailed-info__capital'>
+      <span class='detailed-info__title'>Capital:</span>
+      <span class='detailed-info__value'>{{capital}}</span>
+    </li>
+
+    <li class='detailed-info__item detailed-info__population'>
+      <span class='detailed-info__title'>Population:</span>
+      <span class='detailed-info__value'>{{population}}</span>
+    </li>
+
+    <li class='detailed-info__item detailed-info__languages'>
+      <span class='detailed-info__title'>Languages:</span>
+      <ul class='detailed-info__languages-list'>
+        {{#each languages}}
+          <li class='languages-list__item'>
+            <span class='languages-list__language-name'>
+              {{#if (isOverZero @index)}}, {{/if}}
+              {{this~}}
+            </span>
+          </li>
+        {{/each}}
+      </ul>
+    </li>
+  </ul>
+{{/each}}
