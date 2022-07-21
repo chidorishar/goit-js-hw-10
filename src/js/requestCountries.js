@@ -27,24 +27,24 @@ function onInput(event) {
   }
 
   fetchCountries(name)
-    .then(countries => {
-      if (countries.length > 1 && countries.length <= 10) {
-        clearRenderElements(false, true);
-        renderCountriesShortInfo(countries);
-      } else if (countries.length > 10) {
-        clearRenderElements();
-        Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else {
-        clearRenderElements(true, false);
-        renderCountriesExtendInfo(countries);
-      }
-    })
+    .then(renderCountries)
     .catch(exception => {
-      clearRenderElements();
+      clearRenderedElements();
       Notify.failure('Oops, there is no country with that name');
     });
+}
+
+function renderCountries(countries) {
+  if (countries.length > 1 && countries.length <= 10) {
+    clearRenderedElements(false, true);
+    renderCountriesShortInfo(countries);
+  } else if (countries.length > 10) {
+    clearRenderedElements();
+    Notify.info('Too many matches found. Please enter a more specific name.');
+  } else {
+    clearRenderedElements(true, false);
+    renderCountriesExtendInfo(countries);
+  }
 }
 
 function renderCountriesShortInfo(countries = {}) {
@@ -55,7 +55,7 @@ function renderCountriesExtendInfo(countries = {}) {
   domEls.countryInfo.innerHTML = extendCountryInfoTmpl({ countries });
 }
 
-function clearRenderElements(shortInfo = true, extendInfo = true) {
+function clearRenderedElements(shortInfo = true, extendInfo = true) {
   shortInfo ? renderCountriesShortInfo() : null;
   extendInfo ? renderCountriesExtendInfo() : null;
 }
