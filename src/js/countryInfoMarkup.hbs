@@ -1,0 +1,10 @@
+{{#each countries}}
+  <li class='country-list__item'>
+    <img
+      class='country-list__country-image'
+      src={{flags.svg}}
+      alt='flag of {{name.official}}'
+    />
+    <span class='country-list__country-name'>{{name.official}}</span>
+  </li>
+{{/each}}
