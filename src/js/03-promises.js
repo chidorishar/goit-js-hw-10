@@ -13,6 +13,8 @@ const promisesOptions = {
 })();
 
 function onFormSubmit(event) {
+  event.preventDefault();
+
   readPromisesCreationOptions(promisesOptions);
   const { delay, step, amount } = promisesOptions;
 
@@ -25,7 +27,7 @@ function onFormSubmit(event) {
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }
-  event.preventDefault();
+  event.target.reset();
 }
 
 function readPromisesCreationOptions(opt) {
